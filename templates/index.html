@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relay — multi-provider AI chat</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github-dark.min.css" id="hljs-theme">
+</head>
+<body>
+
+<div class="app">
+
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <button type="button" id="new-chat-btn" class="new-chat-btn">+ New chat</button>
+    </div>
+    <div id="conversation-list" class="conversation-list"></div>
+  </aside>
+
+  <aside class="relay-rail" aria-label="Provider fallback chain">
+    <div class="relay-title">RELAY</div>
+    <div class="relay-chip" data-provider="groq">
+      <span class="dot"></span><span class="label">GROQ</span>
+    </div>
+    <div class="relay-chip" data-provider="gemini">
+      <span class="dot"></span><span class="label">GEMINI</span>
+    </div>
+    <div class="relay-chip" data-provider="openrouter">
+      <span class="dot"></span><span class="label">OPENROUTER</span>
+    </div>
+    <div class="relay-divider"></div>
+    <div class="relay-chip" data-provider="pollinations">
+      <span class="dot"></span><span class="label">POLLINATIONS</span>
+    </div>
+    <div class="relay-chip" data-provider="huggingface">
+      <span class="dot"></span><span class="label">HF</span>
+    </div>
+  </aside>
+
+  <main class="chat-panel">
+    <header class="chat-header">
+      <div class="header-row">
+        <div>
+          <h1 id="conversation-title">Relay</h1>
+          <p>One chat window, several free AI providers underneath. Falls through the chain automatically.</p>
+        </div>
+        <div class="header-actions">
+          <button type="button" id="tools-toggle" class="icon-btn" title="Let the model use a calculator, clock, and weather lookup (Groq/OpenRouter only, non-streaming)">🔧 Tools</button>
+          <button type="button" id="persona-btn" class="icon-btn" title="Set persona / system prompt">Persona</button>
+          <button type="button" id="export-btn" class="icon-btn" title="Export conversation">Export</button>
+          <button type="button" id="theme-btn" class="icon-btn" title="Toggle light/dark theme">☾</button>
+        </div>
+      </div>
+    </header>
+
+    <div id="thread" class="thread"></div>
+
+    <div id="attachment-preview" class="attachment-preview hidden"></div>
+
+    <form id="composer" class="composer">
+      <div class="mode-switch" role="tablist" aria-label="Mode">
+        <button type="button" class="mode-btn active" data-mode="chat" role="tab" aria-selected="true">Chat</button>
+        <button type="button" class="mode-btn" data-mode="image" role="tab" aria-selected="false">Image</button>
+      </div>
+      <input type="file" id="file-input" accept="image/*,.txt,.md,text/plain,text/markdown" hidden>
+      <button type="button" id="attach-btn" class="icon-btn attach-btn" title="Attach an image or text file">📎</button>
+      <textarea id="input" rows="1" placeholder="Message Relay…" autofocus></textarea>
+      <button type="submit" id="send-btn" aria-label="Send">↑</button>
+    </form>
+  </main>
+
+</div>
+
+<div id="persona-modal" class="modal-overlay hidden">
+  <div class="modal">
+    <h2>Persona / system prompt</h2>
+    <p class="modal-hint">Applies to this conversation only. Leave blank for the default assistant.</p>
+    <textarea id="persona-input" rows="5" placeholder="e.g. You are a terse senior engineer. Answer in bullet points only."></textarea>
+    <div class="modal-actions">
+      <button type="button" id="persona-cancel" class="icon-btn">Cancel</button>
+      <button type="button" id="persona-save" class="icon-btn primary">Save</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/highlight.min.js"></script>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

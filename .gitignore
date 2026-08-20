@@ -1,0 +1,29 @@
+# Environment / secrets
+.env
+.env.local
+
+# Python
+venv/
+env/
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# This app's local data
+chat_history.db
+chat_history.db-journal
+test_chat_history.db
+
+# Editors / OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
